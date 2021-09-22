@@ -16,20 +16,16 @@ import re
 import sys
 
 
-# isnonterminal function returns true, if the parameter is a nonterminal
-
 def isnonterminal(nonterm):
     """return boolean datatype"""
     return isinstance(nonterm, str) and re.match(r'^<.*>$', nonterm) is not None
 
 
-# isterminal function returns ture if the parameter is a terminal.
 def isterminal(term):
     """return boolean datatype"""
     return isinstance(term, str) and not isnonterminal(term)
 
 
-# read_grammar reads the input file, parse the input into rules in which are stored into a list.
 def read_grammar(filepath):
     """reads in the input text file, parse the input into rules
     and stores list of rules in grammar"""
@@ -129,14 +125,14 @@ def leftmost_derivation(grammar, sentence, form):  # my last parameter is incorr
 
 
 def print_derivation(grammar, derivation):
-    """This function prints out the derivation found
-    from the recursive function. The first line should always be
-    <program> -> begin <stmt_list> end for every input sentence.
-    Then, the function goes through the for loop to print out the
-    derivation in a neat format."""
-    print(f'1: {grammar[0][0]} -> {" ".join(grammar[0][1])}')
-    for i, things in enumerate(derivation):
-        print(f'{i + 2}:           -> {things[0]} {" ".join(things[1:])}')
+    """ Prints the derivation for a given grammar in a readable format. """
+    start = grammar[0][0]
+    blank = ' ' * len(start)
+    if derivation is None:
+        print('No derivation found')
+    else:
+        for i, form in enumerate(derivation, 1):
+            print(f'{i:4d}: {start if i == 1 else blank} -> {" ".join(form)}')
 
 
 def main():
